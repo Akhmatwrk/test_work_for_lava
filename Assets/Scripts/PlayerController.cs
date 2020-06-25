@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
         {
             OnHit target = item.transform.GetComponent<OnHit>();
 
-            if (target == null) continue;
+            if (target == null)
+            {
+                continue;
+            }
             
             if (Input.GetMouseButtonDown(0))
             {

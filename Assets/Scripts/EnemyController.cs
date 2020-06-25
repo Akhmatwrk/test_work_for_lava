@@ -17,14 +17,14 @@ public class EnemyController : MonoBehaviour
         mainCollider = GetComponent<Collider>();
         allColliders = GetComponentsInChildren<Collider>(true);
 
-        ChangeRagdoll(false);
+        SwitchRagdoll(false);
 
         defaultPosition = transform.position;
         defaultRotation = transform.rotation;
     }
 
 
-    private void ChangeRagdoll(bool isRagdoll)
+    private void SwitchRagdoll(bool isRagdoll)
     {
         foreach (var part in allColliders)
         {
@@ -38,6 +38,7 @@ public class EnemyController : MonoBehaviour
 
                 if (part.attachedRigidbody)
                 {
+                    part.attachedRigidbody.useGravity = isRagdoll;
                     part.attachedRigidbody.velocity = Vector3.zero;
                 }
             }          
@@ -58,7 +59,7 @@ public class EnemyController : MonoBehaviour
         transform.rotation = defaultRotation;
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        ChangeRagdoll(false);
+        SwitchRagdoll(false);
         isDead = false;
     }
 
@@ -67,7 +68,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead)
         {
-            ChangeRagdoll(true);
+            SwitchRagdoll(true);
             GameObject.FindGameObjectWithTag("Logic").GetComponent<GameLogic>().StartSlowMo();
             isDead = true;
         }
